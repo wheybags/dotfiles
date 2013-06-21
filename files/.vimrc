@@ -7,3 +7,7 @@ set number
 highlight Comment ctermfg=cyan
 set ls=2
 set hlsearch
+
+set tabstop=4
+set shiftwidth=4
+set expandtab

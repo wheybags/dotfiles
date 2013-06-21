@@ -51,7 +51,14 @@ git() {
 complete -cf sudo
 complete -cf optirun
 
-export PS1="\[\033[1;37m\][\[\033[1;32m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\[\033[1;37m\] > $\[\033[0m\] "
+# hash hostname to a colour for the prompt
+val=$((0x`hostname | md5sum | awk '{print $1}'`)); val=${val#-}; 
+val1=$(($val % 2))
+val2=$(($val % 6)); val2=$[$val2+1]
+
+export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\[\033[1;37m\] > $\[\033[0m\] "
+
+
 export TERM="xterm"
 
 export BROWSER="chromium"
