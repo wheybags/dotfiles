@@ -1,0 +1,82 @@
+#!/bin/bash
+
+if [ "$#" = 0 ]
+	then
+	echo "Usage: $0 filename" 1>&2
+	echo "$0 filename dir to extract to specific dir" 1>&2
+	exit
+fi
+
+
+archive=`readlink -f "$1"`
+ext=`echo "$1"|awk -F . '{print $NF}'`
+
+echo $ext
+
+if [ $# -lt 2 ]
+	then
+	extractdir=`basename $1 .$ext`
+	extractdir=./`basename $extractdir .tar` # fix for .tar.something
+	echo "Extracting to: $extractdir"
+else
+	extractdir="$2"
+
+	extractdir=`readlink -f "$extractdir"`
+	echo $extractdir
+fi
+
+done=false
+
+if   [ "$ext" = "zip" ]
+	then
+	unzip "$archive" -d "$extractdir"
+	done=true
+
+elif [ "$ext" = "rar" ]
+	then
+
+	if [ ! -d "$extractdir" ]
+		then
+		mkdir "$extractdir"
+	fi
+	
+	cd "$extractdir"	
+	unrar x "$archive"
+	done=true
+
+
+# If file is .tar.something or .tgz
+elif [ `echo "$1" | awk -F . '{print $(NF-1)}'` = "tar" -o "$ext" = "tgz" ]
+	then
+		echo "asasdasd"
+		dirmade=false
+		if [ ! -d "$extractdir" ]
+			then
+			mkdir "$extractdir"
+			dirmade=true
+		fi
+		
+		if [ "$ext" = "gz" -o "$ext" = "tgz" ]
+			then
+			tar xvzf "$archive" -C "$extractdir"
+			done=true
+
+		elif [ "$ext" = "bz2" ]
+			then
+			tar xvjf "$archive" -C "$extractdir"
+			done=true
+		
+		# If it couldnt extract, remove the folder
+		elif [ $dirmade = true ]
+			then
+			rmdir $extractdir
+		fi
+
+fi
+
+if [ done ]
+	then
+	exit 0
+else
+	exit 1
+fi
