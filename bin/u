@@ -23,7 +23,8 @@ function install_file {
 	cd
 	ln -s "$filepath"
 	
-	echo "\t>Linked $1"	
+	echo -en "\t>Linked "
+    echo "$1"	
 }
 export -f install_file
 
