@@ -2,9 +2,9 @@
 
 cd ~/dotfiles
 git pull origin master
-find bin/ -type f -exec chmod 770
 
 function install_file {
+	echo "$1"
 	cd
 
 	if [ -L "$1" ]; then
@@ -23,9 +23,9 @@ function install_file {
 	cd
 	ln -s "$filepath"
 	
-	echo "Linked $1"	
+	echo "\t>Linked $1"	
 }
 export -f install_file
 
 cd ~/dotfiles/files
-find . -maxdepth 1 ! -name . -exec bash -c 'install_file "$0"' {} \;
+find . -maxdepth 1 ! -name "." ! -name ".." -exec bash -c 'install_file "$0"' {} \;
