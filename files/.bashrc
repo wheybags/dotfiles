@@ -52,9 +52,9 @@ complete -cf sudo
 complete -cf optirun
 
 # hash hostname to a colour for the prompt
-val=$((0x`hostname | md5sum | awk '{print $1}'`)); val=${val#-}; 
+val=$((0x`hostname | sha256sum | awk '{print $1}'`)); val=${val#-}; 
 val1=$(($val % 2))
-val2=$(($val % 6)); val2=$[$val2+1]
+val2=$(($val % 5)); val2=$[$val2+2]
 
 export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\[\033[1;37m\] > $\[\033[0m\] "
 
