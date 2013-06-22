@@ -2,7 +2,12 @@
 
 cd ~/dotfiles
 git pull origin master
-git submodule update --init
+
+if [ -z "`ls stuff`" ]; then
+    git submodule init
+fi
+
+git submodule update
 
 function install_file {
 	echo "$1"
