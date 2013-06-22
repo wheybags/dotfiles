@@ -2,6 +2,7 @@
 
 cd ~/dotfiles
 git pull origin master
+git submodule update --init
 
 function install_file {
 	echo "$1"
