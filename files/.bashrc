@@ -4,7 +4,7 @@
 
 cd
 
-PATH=$PATH:`readlink -f bin`:`readlink -f dotfiles/bin`
+PATH=$PATH:`readlink -f bin`:`readlink -f dotfiles/bin`:/sbin:/usr/sbin
 
 export EDITOR="vim"
 stty ixoff -ixon
@@ -28,6 +28,10 @@ alias :D='sm :D'
 alias :3='sm :3'
 alias :q='exit'
 alias grep="grep --color=auto"
+alias v='vim'
+
+alias sudo='sudo env PATH=$PATH'
+
 aurget() { wd=`pwd`; cd /tmp; `which aurget` $@; cd $wd ;} # Store temp files and finsihed package in /tmp, not current wd
 
 # Adds git push all, to push to all git remotes
