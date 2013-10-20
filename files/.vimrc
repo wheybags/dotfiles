@@ -14,3 +14,4 @@ set expandtab
 
 "nmap <F3> a<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <c-d> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+set backspace=indent,eol,start
