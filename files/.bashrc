@@ -67,6 +67,8 @@ export TERM="xterm"
 
 export BROWSER="chromium"
 
-if [ -e ~/Dropbox/TODO.txt ]; then cat ~/Dropbox/TODO.txt; fi
 if [ -f .bashrc_local ]; then source .bashrc_local; fi
 
+if [ -e ~/Dropbox/TODO.txt ]; then cat ~/Dropbox/TODO.txt; fi
+echo
+date
