@@ -4,7 +4,7 @@
 
 cd
 
-PATH=$PATH:`readlink -f bin`:`readlink -f dotfiles/bin`:/sbin:/usr/sbin
+PATH=$PATH:$HOME/bin:$HOME/dotfiles/bin:/sbin:/usr/sbin
 
 export EDITOR="vim"
 stty ixoff -ixon
@@ -19,7 +19,6 @@ alias halt='killall chromium;sudo /sbin/halt'
 #alias spoonprox='ssh -ND 9999 wheybags@spoon.netsoc.tcd.ie'
 alias prox='ssh -NL 8080:www-proxy.scss.tcd.ie:8080 ducss.ie'
 alias c='ssh -t wheybags@cube.netsoc.tcd.ie tmux a -d -t master'
-alias ls='ls --color=auto'
 alias menu='obmenugen;openbox --reconfigure'
 alias lock='xscreensaver-command --lock'
 alias smb='fusesmb /home/wheybags/shares/'
@@ -55,8 +54,16 @@ git() {
 complete -cf sudo
 complete -cf optirun
 
+if [ `uname -s` = "Darwin" ]; then
+    alias hosthash='shasum -a 256'
+    alias ls='ls -G'
+else
+    alias hosthash='sha256sum'
+    alias ls='ls --color=auto'
+fi
+ 
 # hash hostname to a colour for the prompt
-val=$((0x`hostname | sha256sum | awk '{print $1}'`)); val=${val#-}; 
+val=$((0x`hostname | hosthash | awk '{print $1}'`)); val=${val#-}; 
 val1=$(($val % 2))
 val2=$(($val % 5)); val2=$[$val2+2]
 

@@ -24,7 +24,7 @@ function install_file {
 	mv "$1" ~/dotfiles/backups >/dev/null 2>&1
 	
 	cd ~/dotfiles/files
-	filepath=`readlink -f "$1"`
+	filepath=`echo $(cd $(dirname $1); pwd)/$(basename $1)`
 
 	cd
 	ln -s "$filepath"
