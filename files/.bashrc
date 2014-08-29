@@ -67,7 +67,9 @@ val=$((0x`hostname | hosthash | awk '{print $1}'`)); val=${val#-};
 val1=$(($val % 2))
 val2=$(($val % 5)); val2=$[$val2+2]
 
-export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\[\033[1;37m\] > $\[\033[0m\] "
+source $HOME/dotfiles/miscfiles/git-prompt.sh
+
+export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\$(__git_ps1 ' \\033[1;36m[\\033[0;37m%s\\033[1;36m]\\033[0m' )\[\033[1;37m\] > $\[\033[0m\] "
 
 
 export TERM="xterm"
