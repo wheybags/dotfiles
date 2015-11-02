@@ -37,6 +37,7 @@ export -f install_file
 cd ~/dotfiles/files
 find . -maxdepth 1 ! -name "." ! -name ".." -exec bash -c 'install_file "$0"' {} \;
 
-
-git config --global user.name "Tom Mason"
-git config --global user.email "wheybags@wheybags.com"
+if [ ! -f ~/.work ]; then
+    git config --global user.name "Tom Mason"
+    git config --global user.email "wheybags@wheybags.com"
+fi
