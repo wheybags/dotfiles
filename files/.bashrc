@@ -28,6 +28,7 @@ alias :3='sm :3'
 alias :q='exit'
 alias grep="grep --color=auto"
 alias v='vim'
+alias gh='fg'
 
 alias sudo='sudo env PATH=$PATH'
 
