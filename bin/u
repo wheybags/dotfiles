@@ -41,3 +41,6 @@ if [ ! -f ~/.work ]; then
     git config --global user.name "Tom Mason"
     git config --global user.email "wheybags@wheybags.com"
 fi
+
+cd ~/dotfiles
+source packages.sh
