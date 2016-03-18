@@ -1,3 +1,15 @@
+[keybindings]
+switch-to-tab-1='disabled'
+switch-to-tab-2='disabled'
+switch-to-tab-3='disabled'
+switch-to-tab-4='disabled'
+switch-to-tab-5='disabled'
+switch-to-tab-6='disabled'
+switch-to-tab-7='disabled'
+switch-to-tab-10='disabled'
+switch-to-tab-8='disabled'
+switch-to-tab-9='disabled'
+
 [profiles/default]
 background-color='#36F836F836F8'
 use-theme-colors=false
