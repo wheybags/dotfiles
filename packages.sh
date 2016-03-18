@@ -1,4 +1,4 @@
-PACKAGES="moreutils"
+PACKAGES="moreutils htop"
 
 OSX_PACKAGES="pyenv-virtualenv"
 
