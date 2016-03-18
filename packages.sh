@@ -2,7 +2,7 @@ PACKAGES="moreutils"
 
 OSX_PACKAGES="pyenv-virtualenv"
 
-LINUX_PACKAGES="python-virtualenv vim sl sm dconf-cli git-gui"
+LINUX_PACKAGES="python-virtualenv vim sl sm dconf-cli git-gui pv"
 
 unamestr=`uname`
 
