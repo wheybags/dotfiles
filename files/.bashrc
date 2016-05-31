@@ -50,7 +50,7 @@ git() {
 	fi
 }
 
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
 
 complete -cf sudo
 complete -cf optirun
