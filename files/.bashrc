@@ -80,5 +80,18 @@ export BROWSER="chromium"
 if [ -f .bashrc_local ]; then source .bashrc_local; fi
 
 if [ -e ~/Dropbox/TODO.txt ]; then cat ~/Dropbox/TODO.txt; fi
+
+
+# UGH JAVA
+if [ ! -z "`which java`" ]; then
+    J_PATH=`which java`
+    J_PATH=`readlink -f $J_PATH`
+    JAVA_HOME=`dirname $J_PATH`
+    JAVA_HOME=`dirname $JAVA_HOME`
+    JAVA_HOME=`dirname $JAVA_HOME`
+fi
+
+
+
 echo
 date
