@@ -9,6 +9,8 @@ PATH=$PATH:$HOME/bin:$HOME/dotfiles/bin:/sbin:/usr/sbin
 export EDITOR="vim"
 stty ixoff -ixon
 
+bind "set completion-ignore-case on"
+
 alias scrot="scrot -e 'mv \$f ~/Images/scrot/'"
 #alias mplayer='mplayer -vo gl'
 alias pause='killall -STOP'
