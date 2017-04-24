@@ -2,7 +2,7 @@
 # Check for an interactive session
 [ -z "$PS1" ] && return
 
-cd
+#cd
 
 PATH=$PATH:$HOME/bin:$HOME/dotfiles/bin:/sbin:/usr/sbin
 
