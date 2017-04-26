@@ -93,7 +93,11 @@ if [ ! -z "`which java`" ]; then
     JAVA_HOME=`dirname $JAVA_HOME`
 fi
 
-
+unamestr=`uname`
+if [ $unamestr != 'Darwin' ]; then
+    alias open='xdg-open'
+fi
+ 
 
 echo
 date
