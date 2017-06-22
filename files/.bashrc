@@ -79,7 +79,7 @@ export TERM="xterm"
 
 export BROWSER="chromium"
 
-if [ -f .bashrc_local ]; then source .bashrc_local; fi
+if [ -f ~/.bashrc_local ]; then source ~/.bashrc_local; fi
 
 if [ -e ~/Dropbox/TODO.txt ]; then cat ~/Dropbox/TODO.txt; fi
 

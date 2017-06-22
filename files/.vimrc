@@ -17,3 +17,6 @@ imap <c-d> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 set backspace=indent,eol,start
 
 set noswapfile
+
+"disable bullshit mouse integration
+set mouse=
