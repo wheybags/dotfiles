@@ -2,7 +2,7 @@ PACKAGES="moreutils htop"
 
 OSX_PACKAGES="pyenv-virtualenv"
 
-LINUX_PACKAGES="python-virtualenv vim sl sm dconf-cli git-gui pv"
+LINUX_PACKAGES="python-virtualenv vim sl sm dconf-cli git-gui pv build-essential cmake gdb"
 
 unamestr=`uname`
 
