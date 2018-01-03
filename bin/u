@@ -4,10 +4,10 @@ cd ~/dotfiles
 git pull origin master
 
 if [ -z "`ls stuff`" ]; then
-    git submodule init
+    git clone git@github.com:wheybags/stuff
 fi
 
-git submodule update
+(cd stuff && git pull)
 
 function install_file {
 	echo "$1"
