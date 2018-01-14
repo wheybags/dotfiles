@@ -1,6 +1,24 @@
 #!/bin/bash
 
 cd ~/dotfiles
+
+if [ ! -e config ]; then
+    mkdir config
+fi
+
+if [ ! -e config/config_done ]; then
+    touch config/config_done
+
+    echo config/have_sudo | xargs -p touch
+    echo config/have_gui | xargs -p touch
+fi
+
+[ -e config/have_sudo ]; have_sudo=$?
+[ -e config/have_gui ]; have_gui=$?
+
+echo "Have sudo: $[!$have_sudo]"
+echo "Have gui: $[!$have_gui]"
+
 git pull origin master
 
 if [ -z "`ls stuff`" ]; then
@@ -45,4 +63,6 @@ fi
 cd ~/dotfiles
 source packages.sh
 
-dconf load /org/mate/terminal/ < mate-terminal.dconf
+if [ $have_gui ]; then
+    dconf load /org/mate/terminal/ < mate-terminal.dconf
+fi
