@@ -12,6 +12,7 @@
         <option value="Py.class.shortName" />
         <option value="dom.elementClass" />
         <option value="dom.namespaceKey" />
+        <option value="markdown.header" />
       </list>
     </option>
   </component>
