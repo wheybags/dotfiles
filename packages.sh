@@ -33,6 +33,27 @@ if [ $[!$windows] -a $have_gui ]; then
         wget "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-GB" -O firefox.tar.bz2
         tar xvf firefox.tar.bz2
     fi
+    
+    curr_plugin_ver=1
+    plugin_ver=0
+    if [ -f firefox_plugin_ver ]; then
+        plugin_ver=`cat firefox_plugin_ver`
+    fi
+
+    if [ $plugin_ver -lt $curr_plugin_ver ]; then
+        killall firefox || true
+        sleep 5
+        killall -9 firefox || true
+
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/adblocker-ultimate/" &
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/keefox/" &
+
+        for job in `jobs -p`; do
+            wait $job
+        done
+
+        printf "$curr_plugin_ver" > firefox_plugin_ver
+    fi
 
     popd
 fi
