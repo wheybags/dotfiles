@@ -65,4 +65,5 @@ source packages.sh
 
 if [ $have_gui ]; then
     dconf load /org/mate/terminal/ < mate-terminal.dconf
+    dconf load /org/cinnamon/desktop/keybindings/ < keybindings.dconf
 fi

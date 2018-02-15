@@ -1,0 +1,15 @@
+[custom-keybindings/custom1]
+binding=['<Alt>F2']
+command='gmrun'
+name='gmrun'
+
+[custom-keybindings/custom0]
+binding=['<Shift>Insert']
+command='gnome-screenshot'
+name='screenshot'
+
+[/]
+custom-list=['custom0', 'custom1']
+
+[wm]
+panel-run-dialog=@as []
