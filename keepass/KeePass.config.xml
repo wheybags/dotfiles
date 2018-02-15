@@ -122,6 +122,7 @@
 			<MinimumLength>0</MinimumLength>
 			<MinimumQuality>0</MinimumQuality>
 		</MasterPassword>
+		<ClipboardClearAfterSeconds>60</ClipboardClearAfterSeconds>
 	</Security>
 	<Native />
 	<PasswordGenerator>

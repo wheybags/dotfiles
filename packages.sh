@@ -29,5 +29,10 @@ if [ $[!$windows] -a $have_gui ]; then
         mv "pycharm-community-2017.3.2" pycharm
     fi
 
+    if [ ! -e firefox ]; then
+        wget "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-GB" -O firefox.tar.bz2
+        tar xvf firefox.tar.bz2
+    fi
+
     popd
 fi
