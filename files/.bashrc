@@ -4,7 +4,7 @@
 
 #cd
 
-PATH=$PATH:$HOME/bin:$HOME/dotfiles/bin:/sbin:/usr/sbin
+PATH=$HOME/bin:$HOME/dotfiles/bin:$PATH:/sbin:/usr/sbin
 
 export EDITOR="vim"
 stty ixoff -ixon
