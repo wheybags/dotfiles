@@ -56,5 +56,11 @@ if [ $[!$windows] -a $have_gui ]; then
         printf "$curr_plugin_ver" > firefox_plugin_ver
     fi
 
+    if [ ! -e qtcreator ]; then
+        wget "https://download.qt.io/official_releases/qtcreator/4.5/4.5.1/qt-creator-opensource-linux-x86_64-4.5.1.run" -O qtcreator.run
+        chmod +x qtcreator.run
+        ./qtcreator.run --script ../qtcreator-install-script.qs
+    fi
+
     popd
 fi
