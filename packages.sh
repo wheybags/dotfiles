@@ -34,7 +34,7 @@ if [ $[!$windows] -a $have_gui ]; then
         tar xvf firefox.tar.bz2
     fi
     
-    curr_plugin_ver=1
+    curr_plugin_ver=2
     plugin_ver=0
     if [ -f firefox_plugin_ver ]; then
         plugin_ver=`cat firefox_plugin_ver`
@@ -47,6 +47,7 @@ if [ $[!$windows] -a $have_gui ]; then
 
         firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/adblocker-ultimate/" &
         firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/keefox/" &
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/" &
 
         for job in `jobs -p`; do
             wait $job
