@@ -71,6 +71,8 @@ if [ $[!$windows] -a $have_gui ]; then
         wget "https://download.qt.io/official_releases/qtcreator/4.6/4.6.0/qt-creator-opensource-linux-x86_64-4.6.0.run" -O qtcreator.run
         chmod +x qtcreator.run
         ./qtcreator.run --script ../qtcreator-install-script.qs
+
+        printf "$curr_qt_ver" > qt_ver
     fi
 
     popd
