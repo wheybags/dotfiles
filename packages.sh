@@ -1,5 +1,5 @@
 debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind"
-debian_packages_gui="sm dconf-cli git-gui meld gmrun"
+debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc"
 
 debian=1
 uname -a | grep Debian && debian=0
