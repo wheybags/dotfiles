@@ -1,5 +1,5 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind unrar"
-debian_packages_gui="sm dconf-cli git-gui meld gmrun"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar"
+debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
 uname -a | grep Debian && debian=0
@@ -56,7 +56,7 @@ if [ $[!$windows] -a $have_gui ]; then
         printf "$curr_plugin_ver" > firefox_plugin_ver
     fi
 
-    curr_qt_ver=406000
+    curr_qt_ver=407000
     qt_ver=0
     if [ -f qt_ver ]; then
         qt_ver=`cat qt_ver`
@@ -68,7 +68,7 @@ if [ $[!$windows] -a $have_gui ]; then
             rm -rf qtcreator
         fi
 
-        wget "https://download.qt.io/official_releases/qtcreator/4.6/4.6.0/qt-creator-opensource-linux-x86_64-4.6.0.run" -O qtcreator.run
+        wget "https://download.qt.io/official_releases/qtcreator/4.7/4.7.0/qt-creator-opensource-linux-x86_64-4.7.0.run" -O qtcreator.run
         chmod +x qtcreator.run
         ./qtcreator.run --script ../qtcreator-install-script.qs
 
