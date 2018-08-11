@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind unrar"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun"
 
 debian=1
