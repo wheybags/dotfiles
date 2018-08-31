@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate curl wget"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
