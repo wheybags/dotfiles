@@ -75,5 +75,25 @@ if [ $[!$windows] -a $have_gui ]; then
         printf "$curr_qt_ver" > qt_ver
     fi
 
+    curr_zb_ver=170
+    zb_ver=0
+    if [ -f zb_ver ]; then
+        zb_ver=`cat zb_ver`
+    fi
+
+    if [ $zb_ver -lt $curr_zb_ver ]; then
+
+        if [ -e zbstudio ]; then
+            rm -rf zbstudio
+        fi
+
+        wget "https://github.com/pkulchenko/ZeroBraneStudio/archive/1.70.tar.gz" -O zbstudio.tar.gz
+        tar xvf zbstudio.tar.gz
+        mv "ZeroBraneStudio-1.70" zbstudio 
+
+        printf "$curr_zb_ver" > zb_ver
+    fi
+
+
     popd
 fi
