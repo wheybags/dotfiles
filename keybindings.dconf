@@ -1,6 +1,6 @@
 [custom-keybindings/custom1]
 binding=['<Alt>F2']
-command="bash -ci 'gmrun'"
+command="bash -ci 'gmrun&'"
 name='gmrun'
 
 [custom-keybindings/custom0]
