@@ -1,0 +1,7 @@
+<application>
+  <component name="FindSettings">
+    <option name="customScope" value="all_except_config" />
+    <option name="defaultScopeName" value="all_except_config" />
+    <option name="SEARCH_SCOPE" value="all_except_config" />
+  </component>
+</application>

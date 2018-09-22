@@ -1,13 +1,31 @@
-#!/bin/bash
+#!/bin/bash -e
 
 cd ~/dotfiles
+
+if [ ! -e config ]; then
+    mkdir config
+fi
+
+if [ ! -e config/config_done ]; then
+    touch config/config_done
+
+    echo config/have_sudo | xargs -p touch
+    echo config/have_gui | xargs -p touch
+fi
+
+[ -e config/have_sudo ]; have_sudo=$?
+[ -e config/have_gui ]; have_gui=$?
+
+echo "Have sudo: $[!$have_sudo]"
+echo "Have gui: $[!$have_gui]"
+
 git pull origin master
 
 if [ -z "`ls stuff`" ]; then
-    git submodule init
+    git clone git@github.com:wheybags/stuff
 fi
 
-git submodule update
+(cd stuff && git pull)
 
 function install_file {
 	echo "$1"
@@ -45,6 +63,9 @@ fi
 cd ~/dotfiles
 source packages.sh
 
-if [ ! -z "$DISPLAY" ]; then
+if [ $have_gui ]; then
     dconf load /org/mate/terminal/ < mate-terminal.dconf
+    dconf load /org/cinnamon/desktop/keybindings/ < keybindings.dconf
 fi
+
+python3 scripts/filter-config.py filt_to_orig

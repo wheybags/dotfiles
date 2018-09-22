@@ -1,15 +1,131 @@
-PACKAGES="moreutils htop"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar"
+debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
-OSX_PACKAGES="pyenv-virtualenv"
+debian=1
+uname -a | grep Debian && debian=0
 
-LINUX_PACKAGES="python-virtualenv vim sl sm dconf-cli git-gui pv build-essential cmake gdb"
+windows=1
+uname -a | grep MINGW && windows=0
 
-unamestr=`uname`
 
-if [ $unamestr == 'Darwin' ]; then
-    echo "$PACKAGES $OSX_PACKAGES" | xargs brew install
-else
-    if sudo true; then
-        echo "$PACKAGES $LINUX_PACKAGES" | xargs sudo apt-get install -yy
+
+if [ $have_sudo -a $debian ]; then
+    sudo apt install $debian_packages
+
+    if [ $have_gui ]; then
+        sudo apt install $debian_packages_gui
     fi
+fi
+
+if [ ! -e thirdparty ]; then
+    mkdir thirdparty
+fi
+
+if [ $[!$windows] ]; then
+    pushd thirdparty
+    
+    curr_borg_ver=010107
+    borg_ver=0
+    if [ -f borg_ver ]; then
+        borg_ver=`cat borg_ver`
+    fi
+    if [ $borg_ver -lt $curr_borg_ver ]; then
+        if [ -e borg ]; then
+             rm borg 
+        fi
+            
+        wget https://github.com/borgbackup/borg/releases/download/1.1.7/borg-linux64 -O borg
+        chmod +x borg
+
+        printf "$curr_borg_ver" > borg_ver
+    fi
+
+    popd
+fi
+
+if [ $[!$windows] -a $have_gui ]; then
+    pushd thirdparty
+
+    if [ $have_sudo -a $debian ]; then
+        curr_peek_ver=103010
+        peek_ver=0
+        if [ -f peek_ver ]; then
+            peek_ver=`cat peek_ver`
+        fi
+        if [ $peek_ver -lt $curr_peek_ver ]; then
+            if [ -e peek ]; then
+                 rm -rf peek 
+            fi
+
+            sudo apt install valac libgtk-3-dev libkeybinder-3.0-dev libxml2-utils gettext txt2man
+
+            git clone https://github.com/phw/peek.git
+            cd peek
+            git checkout 1.3.1
+            
+            mkdir build
+            cd build
+            cmake -DCMAKE_INSTALL_PREFIX=/usr -DGSETTINGS_COMPILE=OFF ..
+            make package
+
+            sudo apt install ./peek-*-Linux.deb
+
+            cd ../..
+            printf "$curr_peek_ver" > peek_ver
+        fi
+    fi
+
+    if [ ! -e pycharm ]; then
+        wget "https://download-cf.jetbrains.com/python/pycharm-community-2017.3.2.tar.gz" -O pycharm.tar.gz
+        tar xvf pycharm.tar.gz
+        mv "pycharm-community-2017.3.2" pycharm
+    fi
+
+    if [ ! -e firefox ]; then
+        wget "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-GB" -O firefox.tar.bz2
+        tar xvf firefox.tar.bz2
+    fi
+    
+    curr_plugin_ver=2
+    plugin_ver=0
+    if [ -f firefox_plugin_ver ]; then
+        plugin_ver=`cat firefox_plugin_ver`
+    fi
+
+    if [ $plugin_ver -lt $curr_plugin_ver ]; then
+        killall firefox || true
+        sleep 5
+        killall -9 firefox || true
+
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/adblocker-ultimate/" &
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/keefox/" &
+        firefox/firefox -private-window "https://addons.mozilla.org/en-US/firefox/addon/tree-style-tab/" &
+
+        for job in `jobs -p`; do
+            wait $job
+        done
+
+        printf "$curr_plugin_ver" > firefox_plugin_ver
+    fi
+
+    curr_qt_ver=407000
+    qt_ver=0
+    if [ -f qt_ver ]; then
+        qt_ver=`cat qt_ver`
+    fi
+
+    if [ $qt_ver -lt $curr_qt_ver ]; then
+
+        if [ -e qtcreator ]; then
+            rm -rf qtcreator
+        fi
+
+        wget "https://download.qt.io/official_releases/qtcreator/4.7/4.7.0/qt-creator-opensource-linux-x86_64-4.7.0.run" -O qtcreator.run
+        chmod +x qtcreator.run
+        ./qtcreator.run --script ../qtcreator-install-script.qs
+
+        printf "$curr_qt_ver" > qt_ver
+    fi
+
+    popd
 fi

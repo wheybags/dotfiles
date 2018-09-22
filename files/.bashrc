@@ -4,7 +4,7 @@
 
 #cd
 
-PATH=$PATH:$HOME/bin:$HOME/dotfiles/bin:/sbin:/usr/sbin
+PATH=$HOME/bin:$HOME/dotfiles/bin:$PATH:/sbin:/usr/sbin
 
 export EDITOR="vim"
 stty ixoff -ixon
@@ -71,6 +71,7 @@ val1=$(($val % 2))
 val2=$(($val % 5)); val2=$[$val2+2]
 
 source $HOME/dotfiles/miscfiles/git-prompt.sh
+source $HOME/dotfiles/miscfiles/git-completion.bash
 
 export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\$(__git_ps1 ' \\033[1;36m[\\033[0;37m%s\\033[1;36m]\\033[0m' )\[\033[1;37m\] >\n$\[\033[0m\] "
 
