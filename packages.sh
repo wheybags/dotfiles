@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar-free"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
@@ -9,10 +9,10 @@ uname -a | grep MINGW && windows=0
 
 
 
-if [ $have_sudo -a $debian ]; then
+if [ $have_sudo -eq 0 -a $debian -eq 0 ]; then
     sudo apt install $debian_packages
 
-    if [ $have_gui ]; then
+    if [ $have_gui -eq 0 ]; then
         sudo apt install $debian_packages_gui
     fi
 fi
@@ -43,7 +43,7 @@ if [ $[!$windows] ]; then
     popd
 fi
 
-if [ $[!$windows] -a $have_gui ]; then
+if [ $[!$windows] -a $have_gui -eq 0 ]; then
     pushd thirdparty
 
     if [ $have_sudo -a $debian ]; then
