@@ -45,4 +45,6 @@ fi
 cd ~/dotfiles
 source packages.sh
 
-dconf load /org/mate/terminal/ < mate-terminal.dconf
+if [ ! -z "$DISPLAY" ]; then
+    dconf load /org/mate/terminal/ < mate-terminal.dconf
+fi
