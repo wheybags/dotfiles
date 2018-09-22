@@ -7,6 +7,8 @@ uname -a | grep Debian && debian=0
 windows=1
 uname -a | grep MINGW && windows=0
 
+
+
 if [ $have_sudo -a $debian ]; then
     sudo apt install $debian_packages
 
@@ -22,6 +24,35 @@ fi
 
 if [ $[!$windows] -a $have_gui ]; then
     pushd thirdparty
+
+    if [ $have_sudo -a $debian ]; then
+        curr_peek_ver=103010
+        peek_ver=0
+        if [ -f peek_ver ]; then
+            peek_ver=`cat peek_ver`
+        fi
+        if [ $peek_ver -lt $curr_peek_ver ]; then
+            if [ -e peek ]; then
+                 rm -rf peek 
+            fi
+
+            sudo apt install valac libgtk-3-dev libkeybinder-3.0-dev libxml2-utils gettext txt2man
+
+            git clone https://github.com/phw/peek.git
+            cd peek
+            git checkout 1.3.1
+            
+            mkdir build
+            cd build
+            cmake -DCMAKE_INSTALL_PREFIX=/usr -DGSETTINGS_COMPILE=OFF ..
+            make package
+
+            sudo apt install ./peek-*-Linux.deb
+
+            cd ../..
+            printf "$curr_peek_ver" > peek_ver
+        fi
+    fi
 
     if [ ! -e pycharm ]; then
         wget "https://download-cf.jetbrains.com/python/pycharm-community-2017.3.2.tar.gz" -O pycharm.tar.gz
