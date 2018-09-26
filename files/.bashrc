@@ -54,6 +54,8 @@ git() {
 
 #eval $(thefuck --alias)
 
+~/dotfiles/gen_ssh_config.py
+
 complete -cf sudo
 complete -cf optirun
 
