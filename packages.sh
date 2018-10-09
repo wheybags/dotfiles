@@ -3,6 +3,7 @@ debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
 uname -a | grep Debian && debian=0
+uname -a | grep raspberrypi && debian=0
 
 windows=1
 uname -a | grep MINGW && windows=0
