@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar-free"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar-free rsync"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
@@ -19,28 +19,6 @@ fi
 
 if [ ! -e thirdparty ]; then
     mkdir thirdparty
-fi
-
-if [ $[!$windows] ]; then
-    pushd thirdparty
-    
-    curr_borg_ver=010107
-    borg_ver=0
-    if [ -f borg_ver ]; then
-        borg_ver=`cat borg_ver`
-    fi
-    if [ $borg_ver -lt $curr_borg_ver ]; then
-        if [ -e borg ]; then
-             rm borg 
-        fi
-            
-        wget https://github.com/borgbackup/borg/releases/download/1.1.7/borg-linux64 -O borg
-        chmod +x borg
-
-        printf "$curr_borg_ver" > borg_ver
-    fi
-
-    popd
 fi
 
 if [ $[!$windows] -a $have_gui -eq 0 ]; then
