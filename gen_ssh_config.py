@@ -22,7 +22,7 @@ hosts = [
     Host('192.168.0.6', 'id_vmroot', 'vmroot'),
     Host('192.168.0.3', 'id_naspi', 'naspi-local'),
     Host('wheybags.com', 'id_naspi', 'naspi', 2224),
-    Host('office.factorio.com', 'id_factorio')
+    Host('office.factorio.com', 'id_factorio', 'jenkins', 2222)
 ]
 
 
