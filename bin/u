@@ -1,6 +1,8 @@
 #!/bin/bash -e
+set -x
 
 cd ~/dotfiles
+
 
 if [ ! -e config ]; then
     mkdir config
@@ -13,13 +15,16 @@ if [ ! -e config/config_done ]; then
     echo config/have_gui | xargs -p touch
 fi
 
-[ -e config/have_sudo ]; have_sudo=$?
-[ -e config/have_gui ]; have_gui=$?
+have_sudo=1
+if [ -e config/have_sudo ]; then have_sudo=0; fi
+
+have_gui=1
+if [ -e config/have_gui ]; then have_gui=0; fi
 
 echo "Have sudo: $[!$have_sudo]"
 echo "Have gui: $[!$have_gui]"
 
-git pull origin master
+git pull
 
 if [ -z "`ls stuff`" ]; then
     git clone git@github.com:wheybags/stuff
@@ -63,7 +68,10 @@ fi
 cd ~/dotfiles
 source packages.sh
 
-if [ $have_gui ]; then
+if [ $have_gui -eq 0 ]; then
     dconf load /org/mate/terminal/ < mate-terminal.dconf
     dconf load /org/cinnamon/desktop/keybindings/ < keybindings.dconf
+    
+    python3 scripts/filter-config.py filt_to_orig
 fi
+

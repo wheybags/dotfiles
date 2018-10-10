@@ -2,6 +2,16 @@
 # Check for an interactive session
 [ -z "$PS1" ] && return
 
+# load system-provided autocompletions
+if [ -d /etc/profile.d ]; then
+  for i in /etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
 #cd
 
 PATH=$HOME/bin:$HOME/dotfiles/bin:$PATH:/sbin:/usr/sbin
@@ -54,7 +64,9 @@ git() {
 
 #eval $(thefuck --alias)
 
-complete -cf sudo
+~/dotfiles/gen_ssh_config.py
+
+#complete -cf sudo
 complete -cf optirun
 
 if [ `uname -s` = "Darwin" ]; then
@@ -102,3 +114,4 @@ fi
 
 echo
 date
+
