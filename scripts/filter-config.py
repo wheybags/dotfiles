@@ -106,13 +106,14 @@ class XmlConfig(Config):
 
 def main():
     base_dir = os.path.abspath(__file__ + "/../../")
-    configs = [(base_dir + "/keepass/KeePass.config.xml",
-                base_dir + "/keepass/filtered.xml",
-                [r'.*ClipboardClearAfterSeconds.*',
-                 r'.*FocusQuickFindOnRestore.*',
-                 r'.*FocusQuickFindOnUntray.*'],
-                []
-               )]
+    configs = []
+#    [(base_dir + "/keepass/KeePass.config.xml",
+#                base_dir + "/keepass/filtered.xml",
+#                [r'.*ClipboardClearAfterSeconds.*',
+#                 r'.*FocusQuickFindOnRestore.*',
+#                 r'.*FocusQuickFindOnUntray.*'],
+#                []
+#               )]
 
     if len(sys.argv) != 2 or sys.argv[1] not in ("orig_to_filt", "filt_to_orig"):
         print("usage filter-config.py orig_to_filt/filt_to_orig")

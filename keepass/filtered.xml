@@ -1,9 +1,0 @@
-<Configuration>
-    <MainWindow>
-        <FocusQuickFindOnRestore>true</FocusQuickFindOnRestore>
-        <FocusQuickFindOnUntray>true</FocusQuickFindOnUntray>
-    </MainWindow>
-    <Security>
-        <ClipboardClearAfterSeconds>200</ClipboardClearAfterSeconds>
-    </Security>
-</Configuration>
