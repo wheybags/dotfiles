@@ -41,6 +41,7 @@ alias :q='exit'
 alias grep="grep --color=auto"
 alias v='vim'
 alias gh='fg'
+alias sshp='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 
 alias sudo='sudo env PATH=$PATH'
 
