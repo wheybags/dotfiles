@@ -13,6 +13,8 @@ uname -a | grep MINGW && windows=0
 if [ $have_sudo -eq 0 -a $debian -eq 0 ]; then
     sudo apt install $debian_packages
 
+    ./setup_root_mail.sh
+
     if [ $have_gui -eq 0 ]; then
         sudo apt install $debian_packages_gui
     fi
