@@ -3,8 +3,8 @@ set -x
 
 cd ~/dotfiles
 
-if [ -e ~/ownCloud/keepassxc/keepassxc ]; then
-    chmod +x ~/ownCloud/keepassxc/keepassxc
+if [ -e ~/Seafile/password_dbs/keepassxc/keepassxc ]; then
+    chmod +x ~/Seafile/password_dbs/keepassxc/keepassxc
 fi
 
 
