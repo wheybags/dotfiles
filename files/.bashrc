@@ -89,7 +89,7 @@ source $HOME/dotfiles/miscfiles/git-completion.bash
 export PS1="\[\033[1;37m\][\[\033[$val1;3$val2""m\]\\h\[\033[1;37m\]] \[\033[1;34m\]\w\$(__git_ps1 ' \\033[1;36m[\\033[0;37m%s\\033[1;36m]\\033[0m' )\[\033[1;37m\] >\n$\[\033[0m\] "
 
 
-export TERM="xterm"
+#export TERM="xterm"
 
 export BROWSER="chromium"
 
@@ -116,3 +116,13 @@ fi
 echo
 date
 
+ssh_socket_path=/tmp/wheybags_ssh_sock
+
+if [ ! -z "$SSH_AUTH_SOCK" ]; then 
+    if [ -L $ssh_socket_path ]; then
+        rm $ssh_socket_path
+    fi
+    ln -s $SSH_AUTH_SOCK $ssh_socket_path
+fi
+
+export SSH_AUTH_SOCK=$ssh_socket_path
