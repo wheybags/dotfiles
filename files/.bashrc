@@ -119,10 +119,12 @@ date
 ssh_socket_path=/tmp/wheybags_ssh_sock
 
 if [ ! -z "$SSH_AUTH_SOCK" ]; then 
-    if [ -L $ssh_socket_path ]; then
-        rm $ssh_socket_path
+    if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
+        if [ -L $ssh_socket_path ]; then
+            rm $ssh_socket_path
+        fi
+        ln -s $SSH_AUTH_SOCK $ssh_socket_path
     fi
-    ln -s $SSH_AUTH_SOCK $ssh_socket_path
 fi
 
 export SSH_AUTH_SOCK=$ssh_socket_path
