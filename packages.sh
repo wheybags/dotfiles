@@ -89,7 +89,7 @@ if [ $[!$windows] -a $have_gui -eq 0 ]; then
         printf "$curr_plugin_ver" > firefox_plugin_ver
     fi
 
-    curr_qt_ver=407000
+    curr_qt_ver=408000
     qt_ver=0
     if [ -f qt_ver ]; then
         qt_ver=`cat qt_ver`
@@ -101,7 +101,7 @@ if [ $[!$windows] -a $have_gui -eq 0 ]; then
             rm -rf qtcreator
         fi
 
-        wget "https://download.qt.io/official_releases/qtcreator/4.7/4.7.0/qt-creator-opensource-linux-x86_64-4.7.0.run" -O qtcreator.run
+        wget "https://download.qt.io/development_releases/qtcreator/4.8/4.8.0-beta1/qt-creator-opensource-linux-x86_64-4.8.0-beta1.run" -O qtcreator.run
         chmod +x qtcreator.run
         ./qtcreator.run --script ../qtcreator-install-script.qs
 
