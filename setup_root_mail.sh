@@ -5,7 +5,9 @@ cd $DIR
 
 cd thirdparty
 
-if [ -e nullmailer_set_up ]; then
+installed="true"
+grep -q "NULLMAILER FORCE FROM SCRIPT" /usr/sbin/sendmail || installed="false"
+if [ "$installed" -eq "true" ]; then
     exit 0
 fi
 
@@ -13,7 +15,7 @@ sudo apt install nullmailer
 
 remote_config="smtp.office365.com smtp --port=587 --auth-login --starttls --insecure --user=wheybags@outlook.com --pass="
 
-echo -n Password: 
+echo -n "Password for sendmail override:" 
 read -s pass
 echo
 
