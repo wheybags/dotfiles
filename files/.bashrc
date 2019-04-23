@@ -116,6 +116,14 @@ fi
 echo
 date
 
+# configure bash history
+shopt -s histappend # append .bash_history file, don't overwrite
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a" # append after every command, not just on session close
+
+# HISTSIZE sets unlimited in-session history size, HISTFILESIZE sets the history file size to unlimited
+HISTSIZE=
+HISTFILESIZE=
+
 ssh_socket_path=/tmp/wheybags_ssh_sock
 
 if [ ! -z "$SSH_AUTH_SOCK" ]; then 
