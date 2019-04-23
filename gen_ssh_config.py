@@ -49,6 +49,7 @@ for host in hosts:
                   '    Port {}\n'
                   '    IdentityFile ~/.ssh/{}\n'
                   '    IdentitiesOnly yes\n'
+                  '    CheckHostIP no\n'
                   '\n'.format(host.name, host.host, host.port, host.key))
 
 with open(homedir + '/.ssh/config', 'w') as f:
