@@ -1,9 +1,10 @@
-debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar-free rsync curl wget dnsutils"
+debian_packages="moreutils htop python-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig mlocate unrar-free rsync curl wget dnsutils procmail"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted"
 
 debian=1
 uname -a | grep Debian && debian=0
 uname -a | grep raspberrypi && debian=0
+uname -a | grep Ubuntu && debian=0
 
 windows=1
 uname -a | grep MINGW && windows=0
