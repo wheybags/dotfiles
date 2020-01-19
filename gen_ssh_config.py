@@ -27,7 +27,9 @@ hosts = [
     Host('office.factorio.com', 'id_factorio', name='jenkins', port=2222),
     Host('10.0.0.11', 'tank', name='tank', username='deploy'),
     Host('forums.factorio.com', 'lua_docs_upload', username='deploy'),
-    Host('eu1.factorio.com', 'release_server_key', username='deploy')
+    Host('eu1.factorio.com', 'release_server_key', username='deploy'),
+    Host('home.wheybags.com', 'id_compi', name='compi'),
+    Host('192.168.0.23', 'id_compi', name='compi-local')
 ]
 
 
