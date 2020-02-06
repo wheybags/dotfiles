@@ -1,0 +1,418 @@
+#!/usr/bin/env python2
+
+import pickle
+import os
+import shutil
+import sys
+import datetime
+import subprocess
+
+dt = datetime.datetime
+do_git = True
+
+class Task(object):
+    def __init__(self):
+        self.desc = ""
+        self.weight = 0.0
+
+class DayRecord(object):
+    def __init__(self):
+        self.date = None
+        self.timeRanges = [] 
+        self.tasks = []
+        self.tmpStartTime = None
+
+    def get_task_weights(self):
+        total_weight = sum([t.weight for t in self.tasks])
+
+        weighted_tasks = []
+        for t in self.tasks:
+            newT = Task()
+            newT.desc = t.desc
+            newT.weight = t.weight / total_weight
+            weighted_tasks.append(newT)
+
+        return weighted_tasks
+
+    def str_tasks(self):
+        total_time = datetime.timedelta()
+        
+        for r in self.timeRanges:
+            total_time += r[1]-r[0]
+
+        total_hours = round(total_time.seconds/60.0/60.0,2)
+        fraction_weighted_tasks = self.get_task_weights()
+
+	task_strs = []
+        
+        for i in range(len(fraction_weighted_tasks)):
+            t = fraction_weighted_tasks[i]
+            orig_weight = self.tasks[i].weight
+            task_strs.append(t.desc + " [" + str(orig_weight) + "/" + str(int(t.weight*100.0)) + "%/" + str(round(t.weight * total_hours,2)) +"h]")
+
+        retval = ", ".join(task_strs)
+	return retval
+
+    def __str__(self):
+        return "AAAA " + str(self.tasks)
+
+    def __repr__(self):
+        return self.__str__()
+
+
+filename = "data.pickle"
+data_out_version = 1
+
+def load_data():
+    data = { "version": data_out_version, "timeData": {} }
+
+    if os.path.isfile(filename):
+        with open(filename, "rb") as handle:
+            data = pickle.load(handle)
+    
+    # originally had no version field, migrate to "version 1"
+    if "version" not in data:
+        data2 = { "version": 1, "timeData": {} }
+
+        for x in data:
+            data2["timeData"][x] = DayRecord()
+            data2["timeData"][x].timeRanges = data[x]
+            data2["timeData"][x].date = x
+
+        data = data2
+
+    if data["version"] > data_out_version:
+        raise Exception("invalid data version " + data["version"] + ", highest version I can read is " +  data_out_version)
+
+    return data["timeData"]
+
+def save_data(data):
+    with open(filename + "_tmp", "wb") as handle:
+        pickle.dump({ "version": data_out_version, "timeData": data }, handle, protocol=0)
+
+    shutil.move(filename + "_tmp", filename)
+
+    print "data saved"
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+def str_date(date):
+    return str(date.year) + " " + days[date.weekday()] + " " + months[date.month-1] + " " + str(date.day).zfill(2)
+
+def str_time(time):
+    am = time.hour < 12
+    hours = time.hour
+    if hours > 12:
+        hours -= 12
+
+    return str(hours).zfill(2) + ":" + str(time.minute).zfill(2) + " " + ("AM" if am else "PM")
+
+import pprint
+
+def strip_ansi(s):
+    r = ""
+    adding = True
+    for c in s:
+        if adding and c == '\033':
+            adding = False
+        if not adding and c == 'm':
+            adding = True
+            continue
+        if adding:
+            r += c
+    return r
+ 
+
+def myjust(s, l):
+    return s + (" " * (l - len(strip_ansi(s))))
+
+def print_data(data):
+    #pprint.pprint(data)
+    lastDateWeek = -1
+    lastDateMonth = -1
+
+    monthSum = 0
+
+    result = []
+    
+    keys = sorted(data.keys())
+
+    red = '\033[31m'
+    green = '\033[32m'
+    yellow = '\033[33m'
+    blue = '\033[34m'
+    clear = '\033[0m'
+    
+    green_bg = '\033[42m'
+    clear_bg = '\033[49m'
+
+    getMonthStr = lambda monthNum, mSum, year: green_bg + red + '----------- Month ' + months[monthNum-1] + ' ' + str(year) + ' total: ' + ("%.2fh" % mSum).zfill(7) + " -----------" + clear + clear_bg 
+
+    i = 0
+    for date in keys:
+        if lastDateMonth != -1 and date.month != lastDateMonth:
+            result.append(getMonthStr(lastDateMonth, monthSum, lastDateYear))
+            monthSum = 0
+
+        week = date.isocalendar()[1]
+        if lastDateWeek != -1 and week != lastDateWeek:
+            result.append('')
+
+
+        lastDateWeek = week
+        lastDateMonth = date.month
+        lastDateYear = date.year
+
+        thisDateLine = str(i).zfill(4) + ': ' + red + str_date(date) + clear + ": "
+        
+        seconds = 0
+
+        timeCols = [yellow, blue]
+        timeColIndex = 0
+         
+        timesLine = ""
+        for timeRange in data[date].timeRanges:
+            timesLine = timesLine + timeCols[timeColIndex] + str_time(timeRange[0].time()) + " - " + str_time(timeRange[1].time()) + clear + " "
+            timeColIndex = (timeColIndex + 1) % len(timeCols)
+
+            seconds += (timeRange[1] - timeRange[0]).total_seconds()
+        
+        if data[date].tmpStartTime:
+            timesLine += timeCols[timeColIndex] + str_time(data[date].tmpStartTime) + " - ??:?? ??" + clear
+            timeColIndex = (timeColIndex + 1) % len(timeCols)
+
+        hours = round((seconds / 60.0) / 60.0, 2)
+        monthSum += hours
+
+        thisDateLine += green + "%.2fh " % hours + clear + timesLine
+        
+        thisDateLine = myjust(thisDateLine, 70) +  " | " + data[date].str_tasks()
+
+        result.append(thisDateLine)
+
+        i += 1
+    
+    result.append(getMonthStr(lastDateMonth, monthSum, lastDateYear))
+
+
+
+    return "\n".join(result)
+
+#def input_multi_choice(prompt, choices, default=None):
+#
+#    while True:
+#        selection = raw_input(prompt + " [" + ",".join([x for x in choices]) + "]: ")
+#
+#        if selection.lower() in [x.lower() for x in choices]:
+#            return selection.lower
+
+def readDate():
+    date_done = False
+    
+    while not date_done:
+        date_str = raw_input("day [TODAY]: ")
+
+        if date_str.lower() in ["", "today"]:
+            year = dt.now().year
+            month = dt.now().month
+            day = dt.now().day
+
+            date_done = True
+        
+        else:
+            try:
+                month_str, day_str = date_str.split()
+                
+                if month_str[0].isdigit():
+                    month_str, day_str = day_str, month_str
+
+                month = [x.lower() for x in months].index(month_str.lower()) + 1
+
+                while not day_str[-1].isdigit():
+                    day_str = day_str[:-1]
+
+                day = int(day_str)
+
+                d = dt.now()
+                while d.month != month:
+                    d -= datetime.timedelta(days=1)
+
+                year = d.year
+
+                date_done = True
+            except:
+                pass
+
+    return datetime.date(year, month, day)
+
+def readTime():
+    time_done = False
+
+    while not time_done:
+        time_str = raw_input("time [NOW]: ")
+        
+        if time_str.lower() in ["", "now"]:
+            time = dt.now().time()
+            time = datetime.time(time.hour, time.minute)
+            time_done = True
+        else:
+            try:
+                h_24 = True
+                
+                end = time_str.lower()[-2:]
+                if end in ["am", "pm"]:
+                    h_24 = False
+                    am = end == "am"
+
+                    time_str = time_str[:-2]
+
+                h_str, m_str = time_str.split(":")
+
+                h = int(h_str)
+                m = int(m_str)
+
+                if not h_24 and not am:
+                    h += 12
+
+                time = datetime.time(h, m)
+                time_done = True
+            except:
+                pass
+
+    return time
+
+
+def readNum():
+    num_done = False
+
+    while not num_done:
+        num_str = raw_input("num [0]: ")
+        
+        if num_str.lower() == "":
+            num = 0
+            num_done = True
+        else:
+            try:
+                num = int(num_str)
+                num_done = True
+            except:
+                pass
+
+    return num
+
+
+def __main__():
+    if do_git:
+        subprocess.check_call(["git", "pull"])
+    data = load_data() 
+    
+    modified = False
+
+    if sys.argv[1] == 'addlong':
+        print "ADDING"
+
+        month = sys.argv[2]
+        date = sys.argv[3]
+        timeRange = sys.argv[4]
+
+        startTime, endTime = timeRange.split('-')
+
+        lowerMonths = [x.lower() for x in months]
+
+        start = dt(2017, lowerMonths.index(month.lower()) + 1, int(date[:-2]), int(startTime.split(":")[0]), int(startTime.split(":")[1]))
+        end =   dt(2017, lowerMonths.index(month.lower()) + 1, int(date[:-2]), int(endTime.split(":")[0]),   int(endTime.split(":")[1]))
+        
+        if start.date() not in data:
+            data[start.date()] = DayRecord()
+             
+        data[start.date()].timeRanges.append((start, end))
+        modified = True
+    
+    if sys.argv[1] == 'add':
+        date = readDate()
+        time = readTime()
+
+        if date not in data:
+            data[date] = DayRecord()
+
+        record = data[date]
+
+        if record.tmpStartTime == None:
+            record.tmpStartTime = time
+            print "saved start time of " + str_time(time) + " for day " + str_date(date)
+        else:
+            record.timeRanges.append((dt.combine(date, record.tmpStartTime), dt.combine(date, time)))
+            record.tmpStartTime = None
+            print "saved new record of " + str_time(record.timeRanges[-1][0]) + " - " + str_time(record.timeRanges[-1][1]) + " for day " + str_date(date)
+
+        print
+        modified = True
+
+    if sys.argv[1] == 'task':
+        date = readDate()
+
+        if date not in data:
+            data[date] = DayRecord()
+
+        record = data[date]
+
+        desc = raw_input("task desc: ")
+
+        done = False
+        while not done:
+            try:
+                weight = float(raw_input("weight: "))
+                done = True
+            except:
+                pass
+
+        task = Task()
+        task.desc = desc
+        task.weight = weight
+
+        record.tasks.append(task)
+
+        print record.str_tasks()
+        modified = True
+
+
+
+
+
+
+
+    if sys.argv[1] == 'del':
+        print "DELETING"
+
+        index = int(sys.argv[2])
+        del data[sorted(data.keys())[index]]
+        modifed = True        
+        modified = True
+
+    if sys.argv[1] == 'dt':
+        date = readDate()
+        num = readNum()
+
+        del data[date].tasks[num]
+        modified = True
+
+    #for d in data.keys():
+    #    for i in range(len(data[d])):
+    #        data[d][i] = (data[d][i][0], data[d][i][1] + datetime.timedelta(hours=12))
+
+
+    if modified:
+        save_data(data)
+
+        if do_git:
+            subprocess.check_call(["git", "add", "data.pickle"])
+            subprocess.check_call(["git", "commit", "-m", "asdasd"])
+            subprocess.check_call(["git", "push"])
+
+
+
+    print print_data(data)
+
+if __name__ == "__main__":
+    __main__()
