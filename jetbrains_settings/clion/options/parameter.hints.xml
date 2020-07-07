@@ -1,0 +1,36 @@
+<application>
+  <component name="ParameterNameHintsSettings">
+    <blacklists>
+      <blacklist language="C/C++">
+        <added pattern="FixedPoint::FixedPoint(input)" />
+        <added pattern="FixedPoint::FixedPoint(integerValue)" />
+        <added pattern="Render::ScopedBindGL::ScopedBindGL(resource,binding)" />
+        <added pattern="ShaderModule::D3D11::D3D11(vertexPath,fragmentPath)" />
+        <added pattern="ShaderModule::Vulkan::Vulkan(vertexPath,fragmentPath)" />
+        <added pattern="ShaderModule::OGL33::OGL33(vertexPath,fragmentPath)" />
+        <added pattern="ShaderModule::ShaderModule(ogl,d3d11,vulkan)" />
+        <added pattern="PipelineStateSpecification::PipelineStateSpecification(pipelineLayout,shader,vertexLayout,blendState,topology,flags)" />
+        <added pattern="Render::VertexArrayObject::getVertexBuffer(index)" />
+        <added pattern="SDL_CreateWindow(title,x,y,w,h,flags)" />
+        <added pattern="Render::DescriptorSet::updateItems(items)" />
+        <added pattern="Render::DescriptorSet::Item::Item(.bindingIndex,.item)" />
+        <added pattern="Render::DescriptorSetSpec::DescriptorSetSpec(.items)" />
+        <added pattern="Render::ScopedBindGL::ScopedBindGL(resource,extra1,extra2)" />
+        <added pattern="debug_assert(cond)" />
+        <added pattern="Render::Color::Color(r,g,b,a)" />
+        <added pattern="Render::CommandQueue::cmdClearCurrentFramebuffer(color)" />
+        <added pattern="std::vector::reserve(n)" />
+        <added pattern="VertexLayout::Geometry::Geometry(.x,.y,.z,.u,.v)" />
+        <added pattern="VertexLayout::Geometry::Geometry(.x,.y,.z,.u)" />
+        <added pattern="std::pair::pair(x,y)" />
+        <added pattern="printf(format)" />
+        <added pattern="FAWorld::Missile::MissileGraphic::playAnimation(spriteGroup,animationType)" />
+        <added pattern="Render::BasicVertex::BasicVertex(.vertex_position[0],.vertex_position[1],.vertex_uv[0],.vertex_uv[1])" />
+        <added pattern="Render::DebugVertex::DebugVertex(.vertex_position[0],.vertex_position[1],.vertex_uv[0],.vertex_uv[1],.vertex_uv[2],.vertex_uv[3])" />
+        <added pattern="Render::DebugVertex::DebugVertex(.vertex_position[0],.vertex_position[1],.vertex_color[0],.vertex_color[1],.vertex_color[2],.vertex_color[3])" />
+        <added pattern="Level::LevelTransitionArea::LevelTransitionArea(.offset,.dimensions,.playerSpawnOffset)" />
+        <added pattern="cxxopts::OptionAdder::operator()(opts,desc,value,arg_help)" />
+      </blacklist>
+    </blacklists>
+  </component>
+</application>
