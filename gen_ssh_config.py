@@ -29,7 +29,7 @@ hosts = [
     Host('forums.factorio.com', 'lua_docs_upload', username='deploy'),
     Host('eu1.factorio.com', 'release_server_key', username='deploy'),
     Host('home.wheybags.com', 'id_compi', name='compi'),
-    Host('192.168.0.23', 'id_compi', name='compi-local')
+    Host('192.168.1.1', 'id_compi', name='compi-local')
 ]
 
 
