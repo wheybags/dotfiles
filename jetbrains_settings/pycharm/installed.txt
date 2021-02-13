@@ -1,0 +1,4 @@
+BashSupport
+GLSL
+com.jetbrains.plugins.ini4idea
+com.tang

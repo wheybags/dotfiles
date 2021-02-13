@@ -1,0 +1,17 @@
+<application>
+  <component name="CodeInsightSettings">
+    <option name="completionCaseSensitive" value="2" />
+    <option name="COMPLETION_CASE_SENSITIVE" value="2" />
+    <option name="AUTOINSERT_PAIR_BRACKET" value="false" />
+    <option name="AUTOINSERT_PAIR_QUOTE" value="false" />
+    <option name="REFORMAT_ON_PASTE" value="1" />
+    <option name="INDENT_TO_CARET_ON_PASTE" value="true" />
+  </component>
+  <component name="DefaultFont">
+    <option name="FONT_SIZE" value="12" />
+  </component>
+  <component name="EditorSettings">
+    <option name="USE_SOFT_WRAPS" value="MAIN_EDITOR:CONSOLE" />
+    <option name="SOFT_WRAP_FILE_MASKS" value="*.md; *.txt; *.rst; *.adoc" />
+  </component>
+</application>
