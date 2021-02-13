@@ -3,7 +3,7 @@
     <defaultProject>
       <component name="CMakeSettings">
         <configurations>
-          <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+          <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
         </configurations>
       </component>
       <component name="InspectionProjectProfileManager">

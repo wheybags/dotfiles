@@ -9,6 +9,13 @@
     <option name="FUNCTION_BRACE_PLACEMENT" value="2" />
     <option name="INSERT_VIRTUAL_WITH_OVERRIDE" value="true" />
   </Objective-C>
+  <Objective-C-extensions>
+    <extensions>
+      <pair source="cpp" header="hpp" fileNamingConvention="NONE" />
+      <pair source="c" header="h" fileNamingConvention="NONE" />
+      <pair source="cu" header="cuh" fileNamingConvention="NONE" />
+    </extensions>
+  </Objective-C-extensions>
   <codeStyleSettings language="CMake">
     <indentOptions>
       <option name="CONTINUATION_INDENT_SIZE" value="4" />

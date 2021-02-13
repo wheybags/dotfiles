@@ -30,6 +30,17 @@
         <added pattern="Render::DebugVertex::DebugVertex(.vertex_position[0],.vertex_position[1],.vertex_color[0],.vertex_color[1],.vertex_color[2],.vertex_color[3])" />
         <added pattern="Level::LevelTransitionArea::LevelTransitionArea(.offset,.dimensions,.playerSpawnOffset)" />
         <added pattern="cxxopts::OptionAdder::operator()(opts,desc,value,arg_help)" />
+        <added pattern="std::array::array(._M_elems[0],._M_elems[1])" />
+        <added pattern="Render::VertexLayout::VertexLayout(elements,rate)" />
+        <added pattern="BasicVertex::BasicVertex(.vertex_position[0],.vertex_position[1])" />
+        <added pattern="glm::vec::vec(_x,_y,_z)" />
+        <added pattern="BasicVertex::BasicVertex(.vertex_position[0],.vertex_position[1],.vertex_position[2])" />
+        <added pattern="glm::vec::vec(_x,_y)" />
+        <added pattern="glm::vec::vec(_x,_y,_z,_w)" />
+        <added pattern="FullscreenVertex::FullscreenVertex(.vertex_position[0],.vertex_position[1],.vertex_uv[0],.vertex_uv[1])" />
+        <added pattern="agui::TextBox::setText(text)" />
+        <added pattern="Result::Result(.optionalHumanFriendlyErrorMessage,.succeeded)" />
+        <added pattern="test_::test_(.name,.func)" />
       </blacklist>
     </blacklists>
   </component>
