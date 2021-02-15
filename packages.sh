@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python3-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig unrar-free rsync curl wget dnsutils procmail ccache clang aptitude imagemagick"
+debian_packages="moreutils htop python3-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig unrar-free rsync curl wget dnsutils procmail ccache clang aptitude imagemagick socat"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted seafile-gui gnome-shell-extensions peek"
 
 debian=1

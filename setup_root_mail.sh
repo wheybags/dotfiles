@@ -7,7 +7,7 @@ cd thirdparty
 
 installed="true"
 grep -q "NULLMAILER FORCE FROM SCRIPT" /usr/sbin/sendmail || installed="false"
-if [ "$installed" -eq "true" ]; then
+if [ "$installed" == "true" ]; then
     exit 0
 fi
 

@@ -124,15 +124,29 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a" # append afte
 HISTSIZE=
 HISTFILESIZE=
 
+wsl=1
+uname -a | grep WSL && wsl=0
+
 ssh_socket_path=/tmp/wheybags_ssh_sock
 
-if [ ! -z "$SSH_AUTH_SOCK" ]; then 
-    if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
-        if [ -L $ssh_socket_path ]; then
-            rm $ssh_socket_path
-        fi
-        ln -s $SSH_AUTH_SOCK $ssh_socket_path
+if [ $wsl ]; then
+    # https://github.com/rupor-github/wsl-ssh-agent/tree/a7e6af06b5c541b66903f3655e95832be3308015#wsl-2-compatibility
+    export SSH_AUTH_SOCK=$ssh_socket_path
+
+    ss -a | grep -q $SSH_AUTH_SOCK
+    if [ $? -ne 0   ]; then
+        ( setsid socat UNIX-LISTEN:$ssh_socket_path,fork EXEC:"/home/wheybags/dotfiles/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
     fi
+else
+    if [ ! -z "$SSH_AUTH_SOCK" ]; then 
+        if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
+            if [ -L $ssh_socket_path ]; then
+                rm $ssh_socket_path
+            fi
+            ln -s $SSH_AUTH_SOCK $ssh_socket_path
+        fi
+    fi
+    
+    export SSH_AUTH_SOCK=$ssh_socket_path
 fi
 
-export SSH_AUTH_SOCK=$ssh_socket_path

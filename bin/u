@@ -79,3 +79,4 @@ if [ $have_gui -eq 0 ]; then
     python3 scripts/filter-config.py filt_to_orig
 fi
 
+sed -i 's/https:\/\/github.com\/wheybags/git@github.com:\/wheybags/' .git/config
