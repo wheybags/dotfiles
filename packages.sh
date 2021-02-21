@@ -1,28 +1,25 @@
 debian_packages="moreutils htop python3-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig unrar-free rsync curl wget dnsutils procmail ccache clang aptitude imagemagick socat"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted seafile-gui gnome-shell-extensions peek"
 
-debian=1
-uname -a | grep Debian && debian=0
-uname -a | grep raspberrypi && debian=0
-uname -a | grep Ubuntu && debian=0
+debian="false"
+uname -a | grep Debian && debian="true"
+uname -a | grep raspberrypi && debian="true"
+uname -a | grep Ubuntu && debian="true"
 
 if [ -e /etc/issue ]; then
-    cat /etc/issue | grep Ubuntu && debian=0
+    cat /etc/issue | grep Ubuntu && debian="true"
 fi
 
-windows=1
-uname -a | grep MINGW && windows=0
-
-wsl=1
-uname -a | grep WSL && wsl=0
+windows="false"; uname -a | grep MINGW && windows="true"
+wsl="false"; uname -a | grep WSL && wsl="true"
 
 
-if [ $[!$wsl] ]; then
+if [ "$wsl" == "false" ]; then
     debian_packages="$debian_packages mlocate"
 fi
 
 
-if [ $have_sudo -eq 0 -a $debian -eq 0 ]; then
+if [ $have_sudo -eq 0 -a "$debian" == "true" ]; then
     sudo apt install $debian_packages
 
     ./setup_root_mail.sh
@@ -32,7 +29,7 @@ if [ $have_sudo -eq 0 -a $debian -eq 0 ]; then
     fi
 fi
 
-if [ $wsl ]; then
+if [ "$wsl" == "true" ]; then
     ./install-choco.sh
 fi
 
@@ -40,7 +37,7 @@ if [ ! -e thirdparty ]; then
     mkdir thirdparty
 fi
 
-if [ $[!$windows] -a $have_gui -eq 0 -a $[!$wsl] ]; then
+if [ "$windows" == "false" -a $have_gui -eq 0 -a "$wsl" == "false" ]; then
     pushd thirdparty
 
     if [ ! -e firefox ]; then

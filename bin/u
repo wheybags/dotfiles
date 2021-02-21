@@ -64,19 +64,10 @@ export -f install_file
 cd ~/dotfiles/files
 find . -maxdepth 1 ! -name "." ! -name ".." -exec bash -c 'install_file "$0"' {} \;
 
-if [ ! -f ~/.work ]; then
-    git config --global user.name "Tom Mason"
-    git config --global user.email "wheybags@wheybags.com"
-fi
+git config --global user.name "Tom Mason"
+git config --global user.email "wheybags@wheybags.com"
 
 cd ~/dotfiles
 source packages.sh
-
-if [ $have_gui -eq 0 ]; then
-    dconf load /org/mate/terminal/ < mate-terminal.dconf
-    dconf load /org/cinnamon/desktop/keybindings/ < keybindings.dconf
-    
-    python3 scripts/filter-config.py filt_to_orig
-fi
 
 sed -i 's/https:\/\/github.com\/wheybags/git@github.com:\/wheybags/' .git/config
