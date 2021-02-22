@@ -1,11 +1,6 @@
 <application>
   <component name="ProjectManager">
     <defaultProject>
-      <component name="CMakeSettings">
-        <configurations>
-          <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
-        </configurations>
-      </component>
       <component name="InspectionProjectProfileManager">
         <profile version="1.0">
           <option name="myName" value="Project Default" />

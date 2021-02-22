@@ -1,3 +1,4 @@
+Code MiniMap
 GLSL
 com.tang
 moe.knox.factorio.autocompletion
