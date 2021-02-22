@@ -32,4 +32,4 @@ initial_setup_wsl() {
 
 initial_setup_wsl
 
-~/dotfiles/bin/choco install procexp firefox notepadplusplus keepassxc everything seafile-client
+~/dotfiles/bin/choco install procexp firefox notepadplusplus keepassxc everything seafile-client vcxsrv

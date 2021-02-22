@@ -19,7 +19,10 @@ uname -a | grep WSL && wsl=0
 
 if [ $[!$wsl] ]; then
     debian_packages="$debian_packages mlocate"
+else
+    debian_packages="$debian_packages git-gui"
 fi
+
 
 
 if [ $have_sudo -eq 0 -a $debian -eq 0 ]; then
