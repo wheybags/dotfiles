@@ -17,19 +17,14 @@ class Host:
 
 hosts = [
     Host('wheybags.com', 'id_sirvore_2'),
-    Host('wheybags.com', 'id_factorio_desktop', name='office', port=2223),
     Host('github.com', 'id_github', username='git'),
     Host('gist.github.com', 'id_github', username='git'),
     Host('gitlab.com', 'id_gitlab', username='git'),
-    Host('192.168.0.6', 'id_vmroot', name='vmroot'),
-    Host('192.168.0.3', 'id_naspi', name='naspi-local'),
     Host('wheybags.com', 'id_naspi', name='naspi', port=2224),
-    Host('office.factorio.com', 'id_factorio', name='jenkins', port=2222),
-    Host('10.0.0.11', 'tank', name='tank', username='deploy'),
-    Host('forums.factorio.com', 'lua_docs_upload', username='deploy'),
-    Host('eu1.factorio.com', 'release_server_key', username='deploy'),
     Host('home.wheybags.com', 'id_compi', name='compi'),
-    Host('192.168.1.1', 'id_compi', name='compi-local')
+    Host('192.168.1.1', 'id_compi', name='compi-local'),
+    Host('192.168.1.115', 'id_powder_ml1', name='powder-local', port=443),
+    Host('31.204.81.125', 'id_powder_ml1', name='powder', port=443),
 ]
 
 

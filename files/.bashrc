@@ -65,7 +65,6 @@ git() {
 
 #eval $(thefuck --alias)
 
-~/dotfiles/gen_ssh_config.py
 
 #complete -cf sudo
 complete -cf optirun
@@ -163,3 +162,4 @@ else
     export SSH_AUTH_SOCK=$ssh_socket_path
 fi
 
+~/dotfiles/gen_ssh_config.py
