@@ -123,12 +123,11 @@ PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a" # append afte
 HISTSIZE=
 HISTFILESIZE=
 
-wsl=1
-uname -a | grep WSL > /dev/null && wsl=0
+wsl="false"; uname -a | grep WSL && wsl="true"
 
 ssh_socket_path=/tmp/wheybags_ssh_sock
 
-if [ $wsl ]; then
+if [ "$wsl" == "true" ]; then
     # https://github.com/rupor-github/wsl-ssh-agent/tree/a7e6af06b5c541b66903f3655e95832be3308015#wsl-2-compatibility
     export SSH_AUTH_SOCK=$ssh_socket_path
 
@@ -153,9 +152,11 @@ else
     if [ ! -z "$SSH_AUTH_SOCK" ]; then 
         if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
             if [ -L $ssh_socket_path ]; then
+                echo removing agent symlink $ssh_socket_path
                 rm $ssh_socket_path
             fi
             ln -s $SSH_AUTH_SOCK $ssh_socket_path
+            echo linking ssh agent $SSH_AUTH_SOCK $ssh_socket_path
         fi
     fi
     
