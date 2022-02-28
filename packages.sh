@@ -20,7 +20,9 @@ else
     debian_packages="$debian_packages git-gui"
 fi
 
-
+if [ ! -e thirdparty ]; then
+    mkdir thirdparty
+fi
 
 if [ $have_sudo -eq 0 -a "$debian" == "true" ]; then
     sudo apt install $debian_packages
@@ -34,10 +36,6 @@ fi
 
 if [ "$wsl" == "true" ]; then
     ./install-choco.sh
-fi
-
-if [ ! -e thirdparty ]; then
-    mkdir thirdparty
 fi
 
 if [ "$windows" == "false" -a $have_gui -eq 0 -a "$wsl" == "false" ]; then

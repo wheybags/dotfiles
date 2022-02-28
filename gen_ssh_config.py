@@ -2,6 +2,7 @@
 
 import subprocess
 import pathlib
+import os
 
 class Host:
     def __init__(self, host, key, name=None, port=None, username=None):
@@ -39,6 +40,7 @@ pubkeys = { x.split()[2] : x for x in lines }
 
 homedir = str(pathlib.Path.home())
 
+os.makedirs(homedir + '/.ssh', exist_ok=True)
 for key in pubkeys:
     with open(homedir + "/.ssh/" + key.decode('UTF-8') + ".pub", "wb") as f:
         f.write(pubkeys[key])
