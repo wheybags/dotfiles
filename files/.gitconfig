@@ -1,0 +1,9 @@
+[user]
+	name = Tom Mason
+	email = wheybags@wheybags.com
+
+[alias]
+    fp = push --force-with-lease
+
+[rebase]
+    autosquash = true
