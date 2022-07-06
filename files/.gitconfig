@@ -4,6 +4,10 @@
 
 [alias]
     fp = push --force-with-lease
+    pf = push --force-with-lease
+    ff = pull --ff-only
 
 [rebase]
     autosquash = true
+[merge]
+	renamelimit = 9999
