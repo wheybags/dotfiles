@@ -25,7 +25,7 @@ hosts = [
     Host('home.wheybags.com', 'id_compi', name='compi'),
     Host('192.168.1.1', 'id_compi', name='compi-local'),
     Host('192.168.1.115', 'id_powder_ml1', name='powder-local', port=443),
-    Host('31.204.81.125', 'id_powder_ml1', name='powder', port=443),
+    Host('10.10.18.47', 'id_powder_ml1', name='powder', port=22),
     Host('192.168.1.231', 'id_powder_ml1', name='ml2', port=22),
 ]
 

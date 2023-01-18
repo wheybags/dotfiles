@@ -139,15 +139,16 @@ if [ "$wsl" == "true" ]; then
         ( setsid socat UNIX-LISTEN:$ssh_socket_path,fork EXEC:"/home/wheybags/dotfiles/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
     fi
 
-    xhost="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`"
     
-    nc -z -v -w1 $xhost 6000 2>/dev/null
-    if [ $? -eq 1 ]; then
-        echo starting x server...
-        cmd.exe /c "`wslpath -w ~/dotfiles/config.xlaunch`" 
-    fi
-
-    export DISPLAY="$xhost:0"
+    #xhost="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`"
+    #
+    #nc -z -v -w1 $xhost 6000 2>/dev/null
+    #if [ $? -eq 1 ]; then
+    #    echo starting x server...
+    #    cmd.exe /c "`wslpath -w ~/dotfiles/config.xlaunch`" 
+    #fi
+    #
+    #export DISPLAY="$xhost:0"
 else
     if [ ! -z "$SSH_AUTH_SOCK" ]; then 
         if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
