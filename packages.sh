@@ -1,4 +1,4 @@
-debian_packages="moreutils htop python3-virtualenv vim sl pv build-essential cmake gdb mono-complete valgrind apt-file tmux tig unrar-free rsync curl wget dnsutils procmail ccache clang aptitude imagemagick socat"
+debian_packages="moreutils htop python3-virtualenv vim sl pv build-essential cmake gdb valgrind apt-file tmux tig unrar-free rsync curl wget dnsutils procmail ccache clang aptitude imagemagick socat"
 debian_packages_gui="sm dconf-cli git-gui meld gmrun vlc k4dirstat gparted seafile-gui gnome-shell-extensions peek"
 
 debian="false"
@@ -36,6 +36,7 @@ fi
 
 if [ "$wsl" == "true" ]; then
     ./install-choco.sh
+    reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve # bring back proper right click menu
 fi
 
 if [ "$windows" == "false" -a $have_gui -eq 0 -a "$wsl" == "false" ]; then
