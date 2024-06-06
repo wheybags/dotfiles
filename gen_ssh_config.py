@@ -2,6 +2,7 @@
 
 import subprocess
 import pathlib
+import os
 
 class Host:
     def __init__(self, host, key, name=None, port=None, username=None):
@@ -16,20 +17,18 @@ class Host:
         self.username = username
 
 hosts = [
-    Host('wheybags.com', 'id_sirvore_2'),
-    Host('wheybags.com', 'id_factorio_desktop', name='office', port=2223),
+    Host('seafile.wheybags.com', 'id_sirvore_2', name='sirvore'),
     Host('github.com', 'id_github', username='git'),
     Host('gist.github.com', 'id_github', username='git'),
     Host('gitlab.com', 'id_gitlab', username='git'),
-    Host('192.168.0.6', 'id_vmroot', name='vmroot'),
-    Host('192.168.0.3', 'id_naspi', name='naspi-local'),
     Host('wheybags.com', 'id_naspi', name='naspi', port=2224),
-    Host('office.factorio.com', 'id_factorio', name='jenkins', port=2222),
-    Host('10.0.0.11', 'tank', name='tank', username='deploy'),
-    Host('forums.factorio.com', 'lua_docs_upload', username='deploy'),
-    Host('eu1.factorio.com', 'release_server_key', username='deploy'),
     Host('home.wheybags.com', 'id_compi', name='compi'),
-    Host('192.168.0.23', 'id_compi', name='compi-local')
+    Host('192.168.119.1', 'id_compi', name='compi-local'),
+    Host('100.72.40.36', 'id_compi', name='compi-tail'),
+    Host('192.168.1.115', 'id_powder_ml1', name='powder-local', port=443),
+    Host('10.10.18.47', 'id_powder_ml1', name='powder', port=22),
+    Host('192.168.1.231', 'id_powder_ml1', name='ml2', port=22),
+    Host('seafile2.wheybags.com', 'id_sirvore_2', name='lorevore', port=22),
 ]
 
 
@@ -44,6 +43,7 @@ pubkeys = { x.split()[2] : x for x in lines }
 
 homedir = str(pathlib.Path.home())
 
+os.makedirs(homedir + '/.ssh', exist_ok=True)
 for key in pubkeys:
     with open(homedir + "/.ssh/" + key.decode('UTF-8') + ".pub", "wb") as f:
         f.write(pubkeys[key])

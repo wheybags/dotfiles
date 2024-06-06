@@ -1,0 +1,13 @@
+#!/bin/bash
+
+SCRIPT_DIR=/mnt/c/users/wheybags
+SCRIPT_DIR_WIN="C:\\users\\wheybags"
+
+echo "Start-Process PowerShell -verb runas -Wait -ArgumentList '-File','$SCRIPT_DIR_WIN\\choco_boot_2.ps1'" > "$SCRIPT_DIR/choco_boot_1.ps1"
+echo choco $@ > "$SCRIPT_DIR/choco_boot_2.ps1" 
+echo "Write-Host -NoNewLine 'Press any key to continue...';" >> "$SCRIPT_DIR/choco_boot_2.ps1"
+echo "\$null = \$Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');" >> "$SCRIPT_DIR/choco_boot_2.ps1"
+
+powershell.exe "$SCRIPT_DIR_WIN\\choco_boot_1.ps1"
+rm "$SCRIPT_DIR/choco_boot_1.ps1"
+rm "$SCRIPT_DIR/choco_boot_2.ps1"

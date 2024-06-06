@@ -1,0 +1,18 @@
+[user]
+	name = Tom Mason
+	email = wheybags@wheybags.com
+
+[alias]
+    fp = push --force-with-lease
+    pf = push --force-with-lease
+    ff = pull --ff-only
+
+[rebase]
+    autosquash = true
+[merge]
+	renamelimit = 9999
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

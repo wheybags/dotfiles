@@ -1,0 +1,6 @@
+<application>
+  <component name="NotificationConfiguration">
+    <notification groupId="CythonWarning" displayType="NONE" shouldLog="false" />
+    <notification groupId="Module Manager" displayType="NONE" />
+  </component>
+</application>
