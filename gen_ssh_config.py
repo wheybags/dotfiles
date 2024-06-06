@@ -17,17 +17,18 @@ class Host:
         self.username = username
 
 hosts = [
-    Host('wheybags.com', 'id_sirvore_2'),
+    Host('seafile.wheybags.com', 'id_sirvore_2', name='sirvore'),
     Host('github.com', 'id_github', username='git'),
     Host('gist.github.com', 'id_github', username='git'),
     Host('gitlab.com', 'id_gitlab', username='git'),
     Host('wheybags.com', 'id_naspi', name='naspi', port=2224),
     Host('home.wheybags.com', 'id_compi', name='compi'),
-    Host('192.168.1.1', 'id_compi', name='compi-local'),
+    Host('192.168.119.1', 'id_compi', name='compi-local'),
     Host('100.72.40.36', 'id_compi', name='compi-tail'),
     Host('192.168.1.115', 'id_powder_ml1', name='powder-local', port=443),
     Host('10.10.18.47', 'id_powder_ml1', name='powder', port=22),
     Host('192.168.1.231', 'id_powder_ml1', name='ml2', port=22),
+    Host('seafile2.wheybags.com', 'id_sirvore_2', name='lorevore', port=22),
 ]
 
 
