@@ -71,3 +71,10 @@ cd ~/dotfiles
 source packages.sh
 
 sed -i 's/https:\/\/github.com\/wheybags/git@github.com:\/wheybags/' .git/config
+
+wsl="false"; uname -a | grep WSL && wsl="true"
+
+if [ "$wsl" == "true" ]; then
+    git.exe config --global core.sshCommand "'C:\Windows\System32\OpenSSH\ssh.exe'"
+    git.exe config --global core.autocrlf false
+fi
