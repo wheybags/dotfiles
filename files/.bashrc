@@ -42,6 +42,7 @@ alias grep="grep --color=auto"
 alias v='vim'
 alias gh='fg'
 alias sshp='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+alias wh='cd /mnt/c/Users/wheybags'
 
 alias sudo='/bin/sudo --preserve-env=PATH'
 
@@ -127,7 +128,7 @@ wsl="false"; uname -a | grep WSL && wsl="true"
 
 if [ "$wsl" == "true" ]; then
 
-    if ! df | grep /home/wheybags/.ssh >/dev/null; then
+    if ! df 2>/dev/null | grep /home/wheybags/.ssh >/dev/null; then
         if [ "$(ls -A /home/wheybags/.ssh)" ]; then # if .ssh dir is not empty
             mv ~/.ssh ~/.ssh_bak
         fi
