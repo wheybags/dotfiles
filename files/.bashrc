@@ -43,7 +43,7 @@ alias v='vim'
 alias gh='fg'
 alias sshp='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
 
-alias sudo='/bin/sudo --preserve-env=PATH'
+alias sudo='sudo --preserve-env=PATH'
 
 aurget() { wd=`pwd`; cd /tmp; `which aurget` $@; cd $wd ;} # Store temp files and finsihed package in /tmp, not current wd
 
