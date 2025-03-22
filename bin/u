@@ -71,3 +71,16 @@ cd ~/dotfiles
 source packages.sh
 
 sed -i 's/https:\/\/github.com\/wheybags/git@github.com:\/wheybags/' .git/config
+
+wsl="false"; uname -a | grep WSL && wsl="true"
+
+if [ "$wsl" == "true" ]; then
+    cd /mnt/c/users/wheybags
+    git.exe config --global core.sshCommand "'C:\Windows\System32\OpenSSH\ssh.exe'"
+    git.exe config --global core.autocrlf false
+    git.exe config --global alias.fp "push --force-with-lease"
+    git.exe config --global alias.pf "push --force-with-lease"
+    git.exe config --global alias.ff "pull --ff-only"
+
+    cmd.exe /c mklink /j "c:\\users\\wheybags\\.ssh" "c:\\users\\wheybags\\documents\\seafile\\password_dbs\\ssh_config" || true
+fi

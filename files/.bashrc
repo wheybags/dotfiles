@@ -42,6 +42,7 @@ alias grep="grep --color=auto"
 alias v='vim'
 alias gh='fg'
 alias sshp='ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no'
+alias wh='cd /mnt/c/Users/wheybags'
 
 alias sudo='sudo --preserve-env=PATH'
 
@@ -125,19 +126,29 @@ HISTFILESIZE=
 
 wsl="false"; uname -a | grep WSL && wsl="true"
 
-ssh_socket_path=/tmp/wheybags_ssh_sock
-
 if [ "$wsl" == "true" ]; then
-    # https://github.com/rupor-github/wsl-ssh-agent/tree/a7e6af06b5c541b66903f3655e95832be3308015#wsl-2-compatibility
-    export SSH_AUTH_SOCK=$ssh_socket_path
 
-    ss -a | grep -q $SSH_AUTH_SOCK
-    if [ $? -ne 0 ]; then
-        if [ -e $SSH_AUTH_SOCK ]; then
-            rm $SSH_AUTH_SOCK
+    if ! df 2>/dev/null | grep /home/wheybags/.ssh >/dev/null; then
+        if [ "$(ls -A /home/wheybags/.ssh)" ]; then # if .ssh dir is not empty
+            mv ~/.ssh ~/.ssh_bak
         fi
-        ( setsid socat UNIX-LISTEN:$ssh_socket_path,fork EXEC:"/home/wheybags/dotfiles/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
+        
+        mkdir -p ~/.ssh
+        sudo bindfs --perms=700 --force-user=wheybags --force-group=wheybags /mnt/c/Users/wheybags/Documents/Seafile/password_dbs/ssh_config /home/wheybags/.ssh
+        
+        eval $(keychain --eval)
     fi
+
+    # https://github.com/rupor-github/wsl-ssh-agent/tree/a7e6af06b5c541b66903f3655e95832be3308015#wsl-2-compatibility
+    #export SSH_AUTH_SOCK=$ssh_socket_path
+    #
+    #ss -a | grep -q $SSH_AUTH_SOCK
+    #if [ $? -ne 0 ]; then
+    #    if [ -e $SSH_AUTH_SOCK ]; then
+    #        rm $SSH_AUTH_SOCK
+    #    fi
+    #    ( setsid socat UNIX-LISTEN:$ssh_socket_path,fork EXEC:"/home/wheybags/dotfiles/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent",nofork & ) >/dev/null 2>&1
+    #fi
 
     
     #xhost="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`"
@@ -149,19 +160,20 @@ if [ "$wsl" == "true" ]; then
     #fi
     #
     #export DISPLAY="$xhost:0"
-else
-    if [ ! -z "$SSH_AUTH_SOCK" ]; then 
-        if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
-            if [ -L $ssh_socket_path ]; then
-                echo removing agent symlink $ssh_socket_path
-                rm $ssh_socket_path
-            fi
-            ln -s $SSH_AUTH_SOCK $ssh_socket_path
-            echo linking ssh agent $SSH_AUTH_SOCK $ssh_socket_path
-        fi
-    fi
-    
-    export SSH_AUTH_SOCK=$ssh_socket_path
 fi
 
-~/dotfiles/gen_ssh_config.py
+ssh_socket_path=/tmp/wheybags_ssh_sock
+if [ ! -z "$SSH_AUTH_SOCK" ]; then 
+    if [ $SSH_AUTH_SOCK != $ssh_socket_path ]; then
+        if [ -L $ssh_socket_path ]; then
+            echo removing agent symlink $ssh_socket_path
+            rm $ssh_socket_path
+        fi
+        ln -s $SSH_AUTH_SOCK $ssh_socket_path
+        echo linking ssh agent $SSH_AUTH_SOCK $ssh_socket_path
+    fi
+fi
+
+export SSH_AUTH_SOCK=$ssh_socket_path
+
+#~/dotfiles/gen_ssh_config.py
