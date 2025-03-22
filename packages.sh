@@ -15,7 +15,7 @@ wsl="false"; uname -a | grep WSL && wsl="true"
 
 
 if [ "$wsl" == "false" ]; then
-    debian_packages="$debian_packages mlocate"
+    debian_packages="$debian_packages locate"
 else
     debian_packages="$debian_packages git-gui"
 fi
